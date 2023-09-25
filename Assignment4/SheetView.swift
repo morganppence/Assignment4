@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-
 struct SheetView: View {
     @Environment(\.dismiss) var dismiss
-    let fruits : Fruit
+    let fruit : Fruit
     
     var body: some View {
         VStack{
@@ -21,8 +20,12 @@ struct SheetView: View {
             .padding()
             .background(.ultraThinMaterial, in:RoundedRectangle(cornerRadius: 20, style:.continuous))
             Text("Here's that info!")
-            Text("fruits : \(fruits.name)")
-            Text("\(fruits.family) • \(fruits.name)")
+            Text("fruits : \(fruit.name)")
+            Text("calories: \(fruit.nutritions.calories)")
+            Text("fat: \(fruit.nutritions.fat)")
+            Text("sugar: \(fruit.nutritions.sugar)")
+            Text("carbohydrates: \(fruit.nutritions.carbohydrates)")
+            Text("protein: \(fruit.nutritions.protein)")
             
                 
             }

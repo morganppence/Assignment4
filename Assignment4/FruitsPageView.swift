@@ -27,7 +27,8 @@ struct FruitDetails: Codable {
 
 struct FruitsPageView : View {
     @State var fruits = [Fruit]()
-    @State private var showingSheet = false
+    @State var fruitDetails = [FruitDetails]()
+    @State var selectedFruit: Fruit?
     
     func getAllFruits() async -> () {
         do {
@@ -42,20 +43,21 @@ struct FruitsPageView : View {
     
     var body: some View {
         NavigationView {
-            List(fruits) { fruits in
+            List(fruits) { fruit in
                 VStack(alignment: .leading) {
-                    Text("\(fruits.family) • \(fruits.name)")
+                    Text("\(fruit.name) • \(fruit.family)")
                     Button("Nutrition Info") {
-                        showingSheet.toggle()
-                    }
-                    .sheet(isPresented: $showingSheet) {
-                        SheetView(fruits : fruits)
+                        selectedFruit = fruit
                     }
                     
                 }
+                
             }
             .task {
                 await getAllFruits()
+            }
+            .sheet(item: $selectedFruit){ fruit in
+                SheetView(fruit: fruit)
             }
         }
         .navigationTitle("Fruit")
